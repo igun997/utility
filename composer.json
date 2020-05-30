@@ -1,0 +1,25 @@
+{
+    "name": "indra/utility",
+    "description": "Utility",
+    "type": "library",
+    "require": {
+        "php": "^7.4",
+        "phpoffice/phpspreadsheet": "^1.5",
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Indra Gunanda",
+            "email": "indra@imceria.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Indra\\Utility\\": "src/"
+        }
+    }
+}
