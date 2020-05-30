@@ -1,5 +1,5 @@
 <?php
-namespace Indie\Utility;
+namespace Igun997\Utility;
 require_once "Bootstrap.php";
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
