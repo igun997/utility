@@ -1,5 +1,5 @@
 {
-    "name": "indra/utility",
+    "name": "igun997/utility",
     "description": "Utility",
     "type": "library",
     "require": {
@@ -19,7 +19,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Indra\\Utility\\": "src/"
+            "Igun997\\Utility\\": "src/"
         }
     }
 }
