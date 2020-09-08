@@ -124,7 +124,7 @@ class Excel
 
   private function arrayFormat()
   {
-
+    $init = $this->content->setActiveSheetIndex($this->sheet);
     $sheetData = $this->content->getActiveSheet()->toArray(false, true, true, true);
 //    Reformat To Numeric KEY
     $this->_replacer($sheetData);
@@ -136,30 +136,38 @@ class Excel
 
   private function _replacer(&$data)
   {
-    $i = 0;
-    if (is_array($data)) {
-      foreach ($data as $key => &$value) {
+      $i = 0;
+      if (is_array($data)) {
+          foreach ($data as $key => &$value) {
 
-          if(empty($value)){
-              unset($data[$key]);
-              continue;
+              if(is_array($value)){
+                  if (empty($value)){
+                      unset($data[$key]);
+                      continue;
+                  }
+              }
+
+              if($value === NULL){
+                  unset($data[$key]);
+                  continue;
+              }
+
+              if($value === FALSE){
+                  unset($data[$key]);
+                  continue;
+              }
+
+              if (!is_numeric($key)) {
+
+                  unset($data[$key]);
+                  $data[$i] = $value;
+              }else {
+                  $this->_replacer($value);
+              }
+
+              $i++;
           }
-
-          if(!$value){
-              unset($data[$key]);
-              continue;
-          }
-
-          if (!is_numeric($key)) {
-              unset($data[$key]);
-              $data[$i] = $value;
-          }else {
-              $this->_replacer($value);
-          }
-
-          $i++;
       }
-    }
 
   }
 
@@ -313,13 +321,16 @@ class Excel
   }
 
 
-  public function output()
+  public function output($costum_path = NULL)
   {
 
     if ($this->instance != NULL) {
 
       $writer = new Xlsx($this->instance);
-      $name = strtolower(trim(str_replace(" ","_",$this->property["title"]))).'.xlsx';
+        $name = strtolower(trim(str_replace(" ", "_", $this->property["title"]))) . '.xlsx';
+        if ($costum_path) {
+            $name = $costum_path . strtolower(trim(str_replace(" ", "_", $this->property["title"]))) . '.xlsx';
+        }
       if ($this->is_download) {
 
          header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
