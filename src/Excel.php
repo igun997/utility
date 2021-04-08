@@ -20,10 +20,10 @@ class Excel
     public int $col = -1;
     public int $sheet = 0;
     public array $options;
-    public $content;
-    public $label;
+    public $content = null;
+    public $label = null;
     public $instance = NULL;
-    public $property;
+    public $property = null;
     public $is_download;
 
     public ?string $type = null;
@@ -97,10 +97,16 @@ class Excel
         }
 
         $this->is_download = $is_download;
-        $this->instance->createSheet();
-        $init = $this->instance->setActiveSheetIndex($this->sheet);
+        //Check if want writer existing
+        if ($this->content === null){
+            $this->instance->createSheet();
+            $init = $this->instance->setActiveSheetIndex($this->sheet);
+        }else{
+            $this->instance = $this->content;
+        }
 
         $this->instance->getActiveSheet()->setTitle($title);
+
         if (count($hidden_col) > 0) {
             foreach ($hidden_col as $index => $item) {
                 $this->instance->getActiveSheet()->getColumnDimension($item)->setVisible(false);
